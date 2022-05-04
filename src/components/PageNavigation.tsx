@@ -1,11 +1,12 @@
 import React, {FC} from 'react';
 import {Button, Grid} from "@mui/material";
 import {ImageSlice} from "../store/redusers/ImageSlice";
-import {useAppDispatch} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 
 const PageNavigation:FC = () => {
 
   const dispatch = useAppDispatch()
+  const {prevButton, nextButton} = useAppSelector(state => state.ImageReducer)
 
   const handleNextPage = () => {
     dispatch(ImageSlice.actions.setNextPage())
@@ -26,6 +27,7 @@ const PageNavigation:FC = () => {
     >
       <Grid sx={{alignSelf: 'start'}} item>
         <Button
+          disabled={prevButton}
           onClick={handlePreviousPage}
           size={"small"}
           variant={"outlined"}
@@ -33,6 +35,7 @@ const PageNavigation:FC = () => {
       </Grid>
       <Grid sx={{alignSelf: 'end'}} item>
         <Button
+          disabled={nextButton}
           onClick={handleNextPage}
           size={"small"}
           variant={"outlined"}

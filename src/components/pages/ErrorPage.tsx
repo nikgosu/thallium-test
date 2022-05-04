@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Box, Typography} from "@mui/material";
 
-const ErrorPage = () => {
+interface Props {
+  error: string
+}
+
+const ErrorPage:FC<Props> = ({error}: Props) => {
   return (
     <Box
       height="100vh"
@@ -9,7 +13,7 @@ const ErrorPage = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Typography variant="h1">Ooops 404 page not found</Typography>
+      <Typography variant="h1">{error}</Typography>
     </Box>
   );
 };

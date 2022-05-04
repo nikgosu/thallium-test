@@ -10,6 +10,8 @@ interface ImageState {
   currentIndex: number
   isLoading: boolean
   error: string
+  nextButton: boolean
+  prevButton: boolean
 }
 
 const initialState: ImageState = {
@@ -20,7 +22,9 @@ const initialState: ImageState = {
   limit: 10,
   currentIndex: 0,
   isLoading: false,
-  error: ''
+  error: '',
+  nextButton: false,
+  prevButton: true
 }
 
 export const ImageSlice = createSlice({
@@ -48,17 +52,30 @@ export const ImageSlice = createSlice({
     },
     setNextPage(state) {
       if (state.sort === 0) {
-        if (state.currentIndex >= state.images.length) return
+        if (state.currentIndex >= state.images.length) {
+          state.nextButton = true
+          return
+        }
         state.imagePage = state.images.slice(state.currentIndex, state.currentIndex + state.limit)
         state.currentIndex = state.currentIndex + state.limit
+        state.prevButton = false
       } else {
-        if (state.currentIndex >= state.sortedImages.length) return
+        if (state.currentIndex >= state.sortedImages.length) {
+          state.nextButton = true
+          return
+        }
+
         state.imagePage = state.sortedImages.slice(state.currentIndex, state.currentIndex + state.limit)
         state.currentIndex = state.currentIndex + state.limit
+        state.prevButton = false
       }
     },
     setPreviousPage(state) {
-      if (state.currentIndex === 10) return;
+      state.nextButton = false
+
+      if (state.currentIndex === 10) return
+      if (state.currentIndex === 20) state.prevButton = true
+
       if (state.sort === 0) {
         state.imagePage = state.images.slice(state.currentIndex - (state.limit + state.limit), state.currentIndex - state.limit)
         state.currentIndex = state.currentIndex - state.limit
@@ -69,6 +86,7 @@ export const ImageSlice = createSlice({
     },
     setSort(state, action: PayloadAction<number>) {
       state.sort = action.payload
+      state.prevButton = true
 
       if (state.sort === 0) {
         state.imagePage = state.images.slice(state.currentIndex, state.limit + state.currentIndex)
