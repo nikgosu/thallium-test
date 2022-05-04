@@ -1,0 +1,36 @@
+.navlinks {
+	margin-left: 10px;
+	display: flex;
+}
+.logo{
+	flex-grow: 1;
+	cursor: pointer;
+}
+.link {
+	text-decoration: none;
+	color: white;
+	margin-left: 20px;
+}
+.link:hover {
+	color: yellow;
+	border-bottom: 1px solid white;
+}
+
+.app-container {
+	margin-top: 40px;
+	width: 90%;
+}
+
+.card {
+	max-width: 345px;
+	min-height: 320px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.loader-div {
+	display: flex;
+	justify-content: center;
+	margin-top: 50px;
+}
